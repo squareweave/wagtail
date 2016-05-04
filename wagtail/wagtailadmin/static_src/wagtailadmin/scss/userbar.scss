@@ -275,9 +275,7 @@ $positions: (
             // Yes, we could use an @else, but there's a bug in scss-lint.
             @if $vertical == 'bottom' {
                 transform: translateY(1rem);
-            }
-
-            @if $vertical == 'top' {
+            } @else {
                 transform: translateY(-1rem);
             }
         }
@@ -289,8 +287,7 @@ $positions: (
 
             @if $vertical == 'bottom' {
                 transform: translateY(-$width-arrow);
-            }
-            @if $vertical == 'top' {
+            } @else {
                 transform: translateY($width-arrow);
             }
         }
@@ -299,16 +296,15 @@ $positions: (
             @for $i from 1 through $max-items {
 
                 @if $vertical == 'bottom' {
-                    $prop: 'nth-last-child';
+                    &:nth-last-child(#{$i}) {
+                        transition-delay: .05s * $i;
+                    }
+                } @else {
+                    &:nth-child(#{$i}) {
+                        transition-delay: .05s * $i;
+                    }
                 }
 
-                @if $vertical == 'top' {
-                    $prop: 'nth-child';
-                }
-
-                &:#{unquote($prop)}(#{$i}) {
-                    transition-delay: .05s * $i;
-                }
             }
         }
     }
